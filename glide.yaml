@@ -1,0 +1,12 @@
+package: github.com/yosmudge/pagerbot
+import:
+- package: github.com/Sirupsen/logrus
+- package: github.com/voxelbrain/goptions
+- package: gopkg.in/yaml.v2
+- package: github.com/stretchr/testify
+- package: github.com/nlopes/slack
+  repo: github.com/yosmudge/slack
+- package: golang.org/x/net
+  subpackages:
+  - websocket
+- package: gopkg.in/jmcvetta/napping.v3

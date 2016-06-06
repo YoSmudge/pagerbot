@@ -1,0 +1,24 @@
+hash: 42d77bccba2438ac8a7a42fd2916790dfb87a362908bc346ebf00b4d811b8c27
+updated: 2016-06-01T18:22:28.234527011+01:00
+imports:
+- name: github.com/nlopes/slack
+  version: 67c6939dd382a85ccbbe2f2e133fd245fe424098
+- name: github.com/Sirupsen/logrus
+  version: f3cfb454f4c209e6668c95216c4744b8fddb2356
+- name: github.com/stretchr/testify
+  version: 8d64eb7173c7753d6419fd4a9caf057398611364
+- name: github.com/voxelbrain/goptions
+  version: 26cb8b04692384f4dc269de3b5fcf3e2ef78573e
+- name: golang.org/x/net
+  version: c4c3ea71919de159c9e246d7be66deb7f0a39a58
+  subpackages:
+  - websocket
+- name: golang.org/x/sys
+  version: 076b546753157f758b316e59bcb51e6807c04057
+  subpackages:
+  - unix
+- name: gopkg.in/jmcvetta/napping.v3
+  version: 5be8267a453ffa5b80c4af7fa4cfc1d04d3cfd5c
+- name: gopkg.in/yaml.v2
+  version: a83829b6f1293c91addabc89d0571c246397bbf4
+devImports: []
