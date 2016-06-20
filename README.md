@@ -2,7 +2,7 @@
 
 Update your Slack user groups based on your PagerDuty Schedules.
 
-At (Songkick)[https://www.songkick.com/], we use PagerDuty for managing our on call schedules. We also have a Slack user group pointing to the people currently on call, so anyone can ping them to alert them of any problems. But updating those user groups every week is both slightly boring, and easy to forget. So when you're working with two services that have APIs, why not automate it?
+At [Songkick](https://www.songkick.com/), we use PagerDuty for managing our on call schedules. We also have a Slack user group pointing to the people currently on call, so anyone can ping them to alert them of any problems. But updating those user groups every week is both slightly boring, and easy to forget. So when you're working with two services that have APIs, why not automate it?
 
 PagerBot is a simple program to do this. Provided with your PagerDuty and Slack API credentials, and some simple configuration, it will update the usergroups automatically, as well as posting a message to channels you select informing everyone who's currently on the rota.
 
@@ -16,7 +16,7 @@ Then build
 
 `go build`
 
-You should have a nice `pagerbot` binary ready to go. You can also download prebuild binaries from the (releases)[https://github.com/YoSmudge/pagerbot/releases] page.
+You should have a nice `pagerbot` binary ready to go. You can also download prebuild binaries from the [releases](https://github.com/YoSmudge/pagerbot/releases) page.
 
 # Configuration
 
