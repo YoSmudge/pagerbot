@@ -8,6 +8,7 @@ import(
   "reflect"
   log "github.com/Sirupsen/logrus"
   "github.com/yosmudge/pagerbot/config"
+  "github.com/yosmudge/pagerbot/pagerduty"
 )
 
 // Ensure all the slack groups are up to date
@@ -27,20 +28,28 @@ func (u *Updater) updateGroups(){
         continue
       }
 
-      if schd.CurrentPeriod != nil{
-        lf["userId"] = schd.CurrentPeriod.User
-        usr := u.Users.ById(schd.CurrentPeriod.User)
+      var activePeriod *pagerduty.CallPeriod
+
+      if schd.NextPeriod != nil{
+        if changeover.IsZero() || schd.NextPeriod.Start.Before(changeover){
+          changeover = schd.NextPeriod.Start
+        }
+      }
+
+      if !changeover.IsZero() && time.Now().UTC().After(changeover){
+        activePeriod = schd.NextPeriod
+      } else if schd.CurrentPeriod != nil{
+        activePeriod = schd.CurrentPeriod
+      }
+
+      if activePeriod != nil{
+        lf["userId"] = activePeriod.User
+        usr := u.Users.ById(activePeriod.User)
         if usr == nil{
           log.WithFields(lf).Warning("Could not find user with ID")
           continue
         }
         currentUsers = append(currentUsers, usr)
-
-        if schd.NextPeriod != nil{
-          if changeover.IsZero() || schd.NextPeriod.Start.Before(changeover){
-            changeover = schd.NextPeriod.Start
-          }
-        }
       }
     }
 
