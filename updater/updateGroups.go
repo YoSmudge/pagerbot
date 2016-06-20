@@ -1,8 +1,10 @@
 package updater
 
 import(
+  "fmt"
   "time"
   "sort"
+  "strings"
   "reflect"
   log "github.com/Sirupsen/logrus"
   "github.com/yosmudge/pagerbot/config"
@@ -48,10 +50,12 @@ func (u *Updater) updateGroups(){
 
     var pdUsers []string
     var slackUsers []string
+    var userNames []string
 
     for _,u := range currentUsers{
       pdUsers = append(pdUsers, u.PagerdutyId)
       slackUsers = append(slackUsers, u.SlackId)
+      userNames = append(userNames, fmt.Sprintf("@%s", u.SlackName))
     }
 
     lf["pdUsers"] = pdUsers
@@ -76,6 +80,22 @@ func (u *Updater) updateGroups(){
         continue
       }
       log.WithFields(lf).Info("Updating group members")
+
+      var userList string
+      if len(userNames) > 1{
+        userList = strings.Join(userNames[:len(userNames)-1], ", ")
+      }
+
+      if len(userNames) > 1{
+        userList = fmt.Sprintf("%s & %s", userList, userNames[len(userNames)-1])
+      } else {
+        userList = userNames[0]
+      }
+
+      msgText := fmt.Sprintf(group.UpdateMessage.Message, userList)
+      for _,c := range group.UpdateMessage.Channels{
+        u.Slack.PostMessage(c, msgText)
+      }
     }
   }
 }

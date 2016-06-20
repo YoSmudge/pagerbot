@@ -7,7 +7,7 @@ import(
 )
 
 func (u *Updater) fetchData(){
-  if u.LastFetch.After(time.Now().UTC().Add(time.Hour*-1)){
+  if u.LastFetch.After(time.Now().UTC().Add(time.Minute*-15)){
     return
   }
   log.Debug("Fetching data")
