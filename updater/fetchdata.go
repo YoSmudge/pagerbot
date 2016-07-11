@@ -7,9 +7,6 @@ import(
 )
 
 func (u *Updater) fetchData(){
-  if u.LastFetch.After(time.Now().UTC().Add(time.Hour*-1)){
-    return
-  }
   log.Debug("Fetching data")
 
   w := sync.WaitGroup{}

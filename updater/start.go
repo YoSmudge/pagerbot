@@ -11,14 +11,18 @@ func (u *Updater) Start(){
 }
 
 // Loop for updater
-// Will call for new data then call the update function, both rate limit themselves so this just runs them on every loop
+// Will call for new data then call the update function
+// Runs on each `updateEvery` interval
+const updateEvery time.Duration = time.Minute*5
 func (u *Updater) run(){
   defer u.Wg.Done()
-  t := time.Tick(time.Second*15)
 
   for {
     u.fetchData()
     u.updateGroups()
-    <-t
+
+    nextInterval := time.Unix((time.Now().UTC().Unix()/int64(updateEvery.Seconds())+1)*int64(updateEvery.Seconds()), 0)
+    waitTime := nextInterval.Sub(time.Now().UTC())
+    time.Sleep(waitTime)
   }
 }
