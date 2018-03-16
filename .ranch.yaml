@@ -1,0 +1,8 @@
+
+name: pagerbot
+
+processes:
+  pagerbot:
+    command: /main
+    count: 1
+    memory: 16

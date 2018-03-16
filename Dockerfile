@@ -11,8 +11,10 @@ WORKDIR /usr/share/zoneinfo
 RUN zip -r -0 /zoneinfo.zip .
 
 FROM scratch
-# the test program:
+# the program:
 COPY --from=golang /go/src/github.com/yosmudge/pagerbot/main /main
+# the config:
+COPY --from=golang /go/src/github.com/yosmudge/pagerbot/config.yml /config.yml
 # the timezone data:
 ENV ZONEINFO /zoneinfo.zip
 COPY --from=alpine /zoneinfo.zip /
