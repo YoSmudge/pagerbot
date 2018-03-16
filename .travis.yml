@@ -1,15 +1,27 @@
 dist: trusty
 sudo: required
+
 language: bash
-services:
-- docker
-install: skip
-script: skip
+
+cache:
+  directories:
+    - /tmp/ci-tools
+
+env:
+  global:
+    - PATH="/tmp/ci-tools:$PATH"
+    - secure: akoJJlYL+trwLdyCEPU3MhflEBJpfNunCCjXDL3aUzwe4jS0QEJpxMqYFP8FNouIgEYiP4a6zcpBj00KYMD+1seCvVhd9SxHdY1ne+MgtvEsMnqzmRVg5BPdXxfx+09mWLU4Ep4iwUAYiuer8X1p9mddbqFPfiHywg6DwnGemwLF3h1EFIZCK1o7bonpBj++Xr/aiuOPg7cO43xhfj9QeRoFsfPtWTCY6S7Bl0C15MRns8NZyiFTyHxpdI18J9ij/pWGTXybC2f+F7a+ei3Xaygv+PCf69pa7GCUPwFnb8UcGRZGjrS2DZLkXUi8BrvjgcnOFfetIhIDwysKgt5cFcBNgmQGmCrlo54IFHBpZv3i91QZx6ONzZRi0wWqzYJc8TCcwC/UGLqFsdrHhOHUJF6MxHwy1hqg1sj4WRmKtTE6UQm+zt1uwpAdA3CIEsIRmR8c33PGfCU/xlqQvrP7ah0V0nSck3quoRjTA0EPbqTlk89f1wlRx8IBiM+E3mBlB6BbVdEur5HhyXx0FFIpaXv/RED4jPyxXzJhEA9LNBMQPhUdYu/aG79/taz8FuXGb3aFDkVbysAHji8+YnSeAqJAT0mCJJHOCH6H9JwxlpYe+7AOvScy+GMLW03WTlki5Hn71PCc3wQW9iK6bqPSGEkj8zExCRAoWV49lXiAO3U=
+
+script: true
+
+before_deploy:
+  - curl -sSL https://github.com/goodeggs/travis-utils/raw/master/install-ci-tools.sh | CACHE_DIR=/tmp/ci-tools sh -s -- ranch git-crypt
+  - git-crypt-unlock
+  - . platform/secrets/ci.env
+  - git-crypt lock
+
 deploy:
   provider: script
   script: ranch deploy
   on:
-    branch: master
-env:
-  global:
-    secure: akoJJlYL+trwLdyCEPU3MhflEBJpfNunCCjXDL3aUzwe4jS0QEJpxMqYFP8FNouIgEYiP4a6zcpBj00KYMD+1seCvVhd9SxHdY1ne+MgtvEsMnqzmRVg5BPdXxfx+09mWLU4Ep4iwUAYiuer8X1p9mddbqFPfiHywg6DwnGemwLF3h1EFIZCK1o7bonpBj++Xr/aiuOPg7cO43xhfj9QeRoFsfPtWTCY6S7Bl0C15MRns8NZyiFTyHxpdI18J9ij/pWGTXybC2f+F7a+ei3Xaygv+PCf69pa7GCUPwFnb8UcGRZGjrS2DZLkXUi8BrvjgcnOFfetIhIDwysKgt5cFcBNgmQGmCrlo54IFHBpZv3i91QZx6ONzZRi0wWqzYJc8TCcwC/UGLqFsdrHhOHUJF6MxHwy1hqg1sj4WRmKtTE6UQm+zt1uwpAdA3CIEsIRmR8c33PGfCU/xlqQvrP7ah0V0nSck3quoRjTA0EPbqTlk89f1wlRx8IBiM+E3mBlB6BbVdEur5HhyXx0FFIpaXv/RED4jPyxXzJhEA9LNBMQPhUdYu/aG79/taz8FuXGb3aFDkVbysAHji8+YnSeAqJAT0mCJJHOCH6H9JwxlpYe+7AOvScy+GMLW03WTlki5Hn71PCc3wQW9iK6bqPSGEkj8zExCRAoWV49lXiAO3U=
+    branch: goodeggs
