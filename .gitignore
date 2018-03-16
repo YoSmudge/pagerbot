@@ -1,3 +1,4 @@
 /pagerbot
 /.goxc.local.json
 /outputs
+.git-crypt.key
