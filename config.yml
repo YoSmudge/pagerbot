@@ -23,3 +23,6 @@ groups:
   - name: shopping-eng-help
     schedules:
       - P5780XN
+  - name: growth-eng-help
+    schedules:
+      - PV8VQWR
