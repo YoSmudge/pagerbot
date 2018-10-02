@@ -26,5 +26,6 @@ after_script:
 deploy:
   provider: script
   script: ranch deploy
+  skip_cleanup: true
   on:
     branch: goodeggs
