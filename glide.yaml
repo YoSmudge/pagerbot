@@ -5,8 +5,10 @@ import:
 - package: gopkg.in/yaml.v2
 - package: github.com/stretchr/testify
 - package: github.com/nlopes/slack
-  repo: github.com/yosmudge/slack
+  repo: git@github.com:yosmudge/slack.git
+  vcs: git
 - package: golang.org/x/net
   subpackages:
   - websocket
-- package: gopkg.in/jmcvetta/napping.v3
+- package: github.com/PagerDuty/go-pagerduty
+  version: ^1.0.4
