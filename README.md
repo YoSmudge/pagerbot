@@ -8,9 +8,9 @@ PagerBot is a simple program to do this. Provided with your PagerDuty and Slack 
 
 # Installation
 
-Install the dependencies with `Glide`
+We use goenv so:
 
-`glide install`
+`goenv local`
 
 Then build
 

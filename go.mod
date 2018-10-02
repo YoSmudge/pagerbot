@@ -9,6 +9,8 @@ require (
 	github.com/kr/pretty v0.1.0 // indirect
 	github.com/lusis/go-slackbot v0.0.0-20180109053408-401027ccfef5 // indirect
 	github.com/lusis/slack-test v0.0.0-20180109053238-3c758769bfa6 // indirect
+	github.com/mitchellh/gox v0.4.0 // indirect
+	github.com/mitchellh/iochan v1.0.0 // indirect
 	github.com/nlopes/slack v0.2.0
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/stretchr/testify v0.0.0-20160524234229-8d64eb7173c7 // indirect

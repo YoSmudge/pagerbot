@@ -1,4 +1,5 @@
 /pagerbot
-/.goxc.local.json
 /outputs
 .git-crypt.key
+.ci-runner.env
+dist/
