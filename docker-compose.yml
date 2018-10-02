@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  runner:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: goodeggs/pagerbot:runner
+    working_dir: /app
+    entrypoint: ["fixuid"]
+    command: ["sh", "-c", "echo 'READY PLAYER ONE'; sleep 90000"]
+    user: ${FIXUID:-1000}:${FIXGID:-1000}
+    volumes:
+      - ${HOME}:${HOME}
+      - .:/app
+      - /var/run/docker.sock:/var/run/docker.sock
+    env_file:
+      - .ci-runner.env
