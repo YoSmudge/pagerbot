@@ -1,8 +1,12 @@
-hash: 42d77bccba2438ac8a7a42fd2916790dfb87a362908bc346ebf00b4d811b8c27
-updated: 2016-06-01T18:22:28.234527011+01:00
+hash: 66ca75830e4a274ddb9e194585e0a72f49a25645682280f34889e587d716a357
+updated: 2018-10-01T15:23:47.375819612-10:00
 imports:
 - name: github.com/nlopes/slack
-  version: 67c6939dd382a85ccbbe2f2e133fd245fe424098
+  version: ca27004ea682472cfc73a093b72358ae3e68d367
+  repo: git@github.com:yosmudge/slack.git
+  vcs: git
+- name: github.com/PagerDuty/go-pagerduty
+  version: b4a4067bdbde86de1d3fdf15c3c01e76bee9127c
 - name: github.com/Sirupsen/logrus
   version: f3cfb454f4c209e6668c95216c4744b8fddb2356
 - name: github.com/stretchr/testify
@@ -13,12 +17,6 @@ imports:
   version: c4c3ea71919de159c9e246d7be66deb7f0a39a58
   subpackages:
   - websocket
-- name: golang.org/x/sys
-  version: 076b546753157f758b316e59bcb51e6807c04057
-  subpackages:
-  - unix
-- name: gopkg.in/jmcvetta/napping.v3
-  version: 5be8267a453ffa5b80c4af7fa4cfc1d04d3cfd5c
 - name: gopkg.in/yaml.v2
   version: a83829b6f1293c91addabc89d0571c246397bbf4
-devImports: []
+testImports: []
