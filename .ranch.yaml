@@ -6,4 +6,4 @@ processes:
   pagerbot:
     command: /pagerbot
     count: 1
-    memory: 16
+    memory: 32
