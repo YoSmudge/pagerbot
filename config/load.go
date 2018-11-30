@@ -20,7 +20,7 @@ func Load(filePath string) error{
     return err
   }
 
-  err = yaml.Unmarshal(configContent, &Config)
+  err = yaml.Unmarshal([]byte(os.ExpandEnv(string(configContent))), &Config)
   if err != nil {
     return fmt.Errorf("Error parsing config file: %s", err)
   }

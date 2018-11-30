@@ -1,0 +1,28 @@
+api_keys:
+  slack: "$SLACK_TOKEN"
+  pagerduty:
+    org: "$PAGERDUTY_ORG"
+    key: "$PAGERDUTY_KEY"
+
+groups:
+  - name: assortment-eng-help
+    schedules:
+      - PD1PBK3
+  - name: devops-help
+    schedules:
+      - PCLYMC8
+  - name: data-help
+    schedules:
+      - PCLYMC8
+  - name: it-help
+    schedules:
+      - PBC8G5I
+  - name: ops-eng-help
+    schedules:
+      - PU12RJM
+  - name: shopping-eng-help
+    schedules:
+      - P5780XN
+  - name: growth-eng-help
+    schedules:
+      - PV8VQWR

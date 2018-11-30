@@ -1,0 +1,9 @@
+env_id: 5bb2ca80841f2a000f3ee566
+
+name: pagerbot
+
+processes:
+  pagerbot:
+    command: /pagerbot
+    count: 1
+    memory: 32
