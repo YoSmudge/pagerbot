@@ -25,12 +25,27 @@ type CallPeriod struct {
 // Fetch the main schedule list then the details about specific schedules
 func (a *Api) Schedules() (Schedules, error) {
 	var schdList Schedules
+	var opts pagerduty.ListSchedulesOptions
 
-	res, err := a.client.ListSchedules(pagerduty.ListSchedulesOptions{})
-	if err != nil {
-		return schdList, err
+	for {
+		res, err := a.client.ListSchedules(opts)
+		if err != nil {
+			return schdList, err
+		}
+
+		updateScheduleListFromResponse(a, res, &schdList)
+
+		if !res.More {
+			break
+		}
+
+		opts.Offset = res.Offset + res.Limit
 	}
 
+	return schdList, nil
+}
+
+func updateScheduleListFromResponse(a *Api, res *pagerduty.ListSchedulesResponse, schdList *Schedules) error {
 	var today string = time.Now().UTC().Format("2006-01-02")
 	var nextWeek string = time.Now().UTC().Add(time.Hour * 24 * 7).Format("2006-01-02")
 
@@ -47,19 +62,19 @@ func (a *Api) Schedules() (Schedules, error) {
 			Until:    nextWeek,
 		})
 		if err != nil {
-			return schdList, err
+			return err
 		}
 
 		var activeEntries int
 		for _, se := range res.FinalSchedule.RenderedScheduleEntries {
 			start, err := time.Parse(time.RFC3339Nano, se.Start)
 			if err != nil {
-				return schdList, err
+				return err
 			}
 
 			end, err := time.Parse(time.RFC3339Nano, se.End)
 			if err != nil {
-				return schdList, err
+				return err
 			}
 
 			if start.Before(time.Now().UTC()) && end.After(time.Now().UTC()) {
@@ -79,7 +94,7 @@ func (a *Api) Schedules() (Schedules, error) {
 				schd.NextPeriod = &p
 			}
 
-			schdList = append(schdList, *schd)
+			*schdList = append(*schdList, *schd)
 		}
 
 		lf := log.Fields{
@@ -105,5 +120,5 @@ func (a *Api) Schedules() (Schedules, error) {
 		log.WithFields(lf).Debug("Got schedule entries")
 	}
 
-	return schdList, nil
+	return nil
 }
