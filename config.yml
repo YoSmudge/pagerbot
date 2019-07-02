@@ -5,9 +5,6 @@ api_keys:
     key: "$PAGERDUTY_KEY"
 
 groups:
-  - name: assortment-eng-help
-    schedules:
-      - PD1PBK3
   - name: devops-help
     schedules:
       - PCLYMC8
@@ -17,12 +14,9 @@ groups:
   - name: it-help
     schedules:
       - PBC8G5I
-  - name: ops-eng-help
+  - name: eng-help
     schedules:
-      - PU12RJM
-  - name: shopping-eng-help
+      - P61VATU
+  - name: eng-help-backup
     schedules:
-      - P5780XN
-  - name: growth-eng-help
-    schedules:
-      - PV8VQWR
+      - P8MOV3F
