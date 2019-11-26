@@ -5,7 +5,7 @@ api_keys:
     key: "$PAGERDUTY_KEY"
 
 groups:
-  - name: devops-help
+  - name: platform-engineering-help
     schedules:
       - PCLYMC8
   - name: data-help
@@ -14,9 +14,9 @@ groups:
   - name: it-help
     schedules:
       - PBC8G5I
-  - name: eng-help
+  - name: application-engineering-help
     schedules:
       - P61VATU
-  - name: eng-help-backup
+  - name: application-engineering-help-backup
     schedules:
       - P8MOV3F
