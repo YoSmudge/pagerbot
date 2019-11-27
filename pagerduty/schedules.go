@@ -93,9 +93,9 @@ func updateScheduleListFromResponse(a *Api, res *pagerduty.ListSchedulesResponse
 				p.User = se.User.ID
 				schd.NextPeriod = &p
 			}
-
-			*schdList = append(*schdList, *schd)
 		}
+
+		*schdList = append(*schdList, *schd)
 
 		lf := log.Fields{
 			"id": schd.Id,
