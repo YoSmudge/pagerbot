@@ -10,7 +10,10 @@ groups:
       - PCLYMC8
   - name: data-help
     schedules:
-      - PCLYMC8
+      - PK08WGZ
+  - name: analytics-help
+    schedules:
+      - PK08WGZ
   - name: it-help
     schedules:
       - PBC8G5I
