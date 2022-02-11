@@ -14,10 +14,14 @@ configuration, it will update the usergroups automatically.
 # Installation
 
 Install the dependencies with go module
-```shell go get .```
+```shell 
+go get .
+```
 
 Then build
-```shell go build```
+```shell 
+go build
+```
 
 You should have a nice `pagerbot` binary ready to go. You can also download prebuild binaries from
 the [releases](https://github.com/qoharu/pagerbot/releases) page.
@@ -30,7 +34,7 @@ A basic configuration file will look like
 api_keys:
   slack: "abcd123"
   pagerduty:
-    org: "songkick"
+    org: "salcompany"
     key: "qwerty567"
 
 groups:
