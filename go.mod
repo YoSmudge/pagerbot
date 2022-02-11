@@ -3,6 +3,7 @@ module github.com/qoharu/pagerbot
 go 1.17
 
 require (
+	github.com/PagerDuty/go-pagerduty v1.5.0
 	github.com/Sirupsen/logrus v0.10.1-0.20160601113210-f3cfb454f4c2
 	github.com/slack-go/slack v0.10.1
 	github.com/voxelbrain/goptions v0.0.0-20151102231003-26cb8b046923
@@ -11,7 +12,6 @@ require (
 )
 
 require (
-	github.com/PagerDuty/go-pagerduty v1.5.0 // indirect
 	github.com/google/go-querystring v1.0.0 // indirect
 	github.com/gorilla/websocket v1.4.2 // indirect
 	github.com/jmcvetta/randutil v0.0.0-20150817122601-2bb1b664bcff // indirect

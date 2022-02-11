@@ -1,25 +1,23 @@
 # PagerBot
+Heavily inspired by https://github.com/YoSmudge/pagerbot
+Forked but the implementations are different.
+- Uses go-slack github.com/slack-go/slack
+- Uses go-pagerduty github.com/PagerDuty/go-pagerduty
+- Posting message to channel is removed (not yet implemented)
+- Specification are the same as the original
 
 Update your Slack user groups based on your PagerDuty Schedules.
 
-At [Songkick](https://www.songkick.com/), we use PagerDuty for managing our on call schedules. We also have a Slack user
-group pointing to the people currently on call, so anyone can ping them to alert them of any problems. But updating
-those user groups every week is both slightly boring, and easy to forget. So when you're working with two services that
-have APIs, why not automate it?
-
-PagerBot is a simple program to do this. Provided with your PagerDuty and Slack API credentials, and some simple
-configuration, it will update the usergroups automatically, as well as posting a message to channels you select
-informing everyone who's currently on the rota.
+PagerBot is a simple program to rotate oncall user group. Provided with your PagerDuty and Slack API credentials, and some simple
+configuration, it will update the usergroups automatically.
 
 # Installation
 
-Install the dependencies with `Glide`
-
-`glide install`
+Install the dependencies with go module
+```shell go get .```
 
 Then build
-
-`go build`
+```shell go build```
 
 You should have a nice `pagerbot` binary ready to go. You can also download prebuild binaries from
 the [releases](https://github.com/qoharu/pagerbot/releases) page.
@@ -40,26 +38,44 @@ groups:
     schedules:
       - PAAAAAA
       - PBBBBBB
-    update_message:
-      message: ":fire_engine: Your firefighters are %s :fire_engine:"
-      channels:
-        - general
   - name: fielder
     schedules:
       - PCCCCCC
-    update_message:
-      message: "Your :baseball: TechOps @Fielder :baseball: this week is %s"
-      channels:
-        - team-engineering
 ```
 
-The configuration should be fairly straightforward, under API keys provide your Slack and Pagerduty keys. Under groups
-configure the Slack groups you'd like to update. Schedules is a list of PagerDuty schedule IDs, update_message is the
-message you'd like to post, and the channels you'd like to post them in.
+The configuration should be fairly straightforward, under API keys provide your Slack and Pagerduty keys. This can be also provided using environment variable by providing `SLACK_TOKEN` and `PAGERDUTY_TOKEN` respectively.
 
-Once done, you can run PagerBot with `./pagerbot --config /path/to/config.yaml`
+Under groups configure the Slack groups you'd like to update. Schedules is a list of PagerDuty schedule IDs.
+
+Once done, you can run PagerBot with `./pagerbot -c /path/to/config.yaml`
 
 It's recommended to run PagerBot under Upstart or some other process manager.
 
-N.B. PagerBot matches PagerDuty users to Slack users by their email addresses, so your users must have the same email
-address in Slack as in PagerDuty. PagerBot will log warnings for any users it finds in PagerDuty but not in Slack.
+N.B. PagerBot matches PagerDuty users to Slack users by their email addresses, so your users must have the same email address in Slack as in PagerDuty. PagerBot will log warnings for any users it finds in PagerDuty but not in Slack.
+
+# Take the Benefit of Github Actions
+In my company, we use Github Actions to run PagerBot on Daily basis by using a scheduled workflow.
+
+```yaml
+name: Slack Pagerduty Oncall Rotation Scheduler
+
+on:
+  schedule:
+  - cron: 0 4 * * *
+  workflow_dispatch:
+
+env:
+  PAGERBOT_URL: https://github.com/qoharu/pagerbot/releases/download/v2.0.0/pagerbot-v2.0.0-linux-amd64.tar.gz
+  CONFIG_FILE: ./pagerduty_oncall_rotation_sch.yaml
+  SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+  PAGERDUTY_TOKEN: ${{ secrets.PAGERDUTY_TOKEN }}
+jobs:
+  scheduler:
+    name: Rotate Oncall
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - run: wget -c $PAGERBOT_URL -O - | tar -xz
+    - run: ./pagerbot -c $CONFIG_FILE -v
+
+```
