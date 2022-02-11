@@ -1,9 +1,14 @@
 package main
 
 import (
+	"github.com/PagerDuty/go-pagerduty"
 	log "github.com/Sirupsen/logrus"
 	"github.com/qoharu/pagerbot/config"
+	"github.com/qoharu/pagerbot/schedule"
 	"github.com/qoharu/pagerbot/updater"
+	"github.com/qoharu/pagerbot/user"
+	"github.com/qoharu/pagerbot/usergroup"
+	"github.com/slack-go/slack"
 	"github.com/voxelbrain/goptions"
 	"os"
 )
@@ -17,7 +22,7 @@ type options struct {
 func main() {
 	parsedOptions := options{}
 
-	parsedOptions.Config = "./config.yml"
+	parsedOptions.Config = "./config.yaml"
 
 	goptions.ParseAndFail(&parsedOptions)
 
@@ -32,10 +37,6 @@ func main() {
 	log.Debug("Logging verbosely!")
 
 	err := config.Load(parsedOptions.Config)
-	if err == nil {
-		err = config.Config.Validate()
-	}
-
 	if err != nil {
 		log.WithFields(log.Fields{
 			"configFile": parsedOptions.Config,
@@ -44,14 +45,12 @@ func main() {
 		os.Exit(1)
 	}
 
-	u, err := updater.New()
-	if err != nil {
-		log.WithFields(log.Fields{
-			"error": err,
-		}).Error("Could not start updater")
-		os.Exit(1)
-	}
+	slackClient := slack.New(config.Config.ApiKeys.Slack)
+	pdClient := pagerduty.NewClient(config.Config.ApiKeys.Pagerduty.Key)
+	userService := user.NewService(slackClient, pdClient)
+	scheduleService := schedule.NewService(userService, pdClient)
+	userGroupService := usergroup.NewService(slackClient)
+	updaterService := updater.NewService(scheduleService, userService, userGroupService)
 
-	u.Start()
-	u.Wg.Wait()
+	updaterService.SyncPagerDutySlackUserGroups()
 }

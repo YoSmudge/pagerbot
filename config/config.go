@@ -1,6 +1,6 @@
 package config
 
-type config struct {
+type AppConfig struct {
 	ApiKeys struct {
 		Slack     string
 		Pagerduty struct {

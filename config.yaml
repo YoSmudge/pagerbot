@@ -1,0 +1,13 @@
+api_keys:
+  pagerduty:
+    org: "sayurbox"
+
+groups:
+  - name: ee-oncall
+    schedules:
+      - PD6GEUD
+      - PRT6BU0
+    update_message:
+      message: ":fire_engine: Your firefighters are %s :fire_engine:"
+      channels:
+        - ee-alert

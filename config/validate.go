@@ -6,13 +6,13 @@ import (
 )
 
 // Validate the configuration file for sanity
-func (c *config) Validate() error {
+func (c *AppConfig) Validate() error {
 	if c.ApiKeys.Slack == "" || c.ApiKeys.Pagerduty.Key == "" {
-		return fmt.Errorf("You must provide API keys for Slack and Pagerduty")
+		return fmt.Errorf("you must provide API keys for Slack and Pagerduty")
 	}
 
 	if c.ApiKeys.Pagerduty.Org == "" {
-		return fmt.Errorf("You must provide an org name for Pagerduty (<org>.pagerduty.com)")
+		return fmt.Errorf("you must provide an org name for Pagerduty (<org>.pagerduty.com)")
 	}
 
 	if len(c.Groups) == 0 {
@@ -29,7 +29,7 @@ func (c *config) Validate() error {
 		}
 	}
 
-	log.WithFields(log.Fields{"groups": len(c.Groups)}).Debug("Loaded config")
+	log.WithFields(log.Fields{"groups": len(c.Groups)}).Debug("Loaded AppConfig")
 
 	return nil
 }

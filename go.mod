@@ -11,8 +11,10 @@ require (
 )
 
 require (
+	github.com/PagerDuty/go-pagerduty v1.5.0 // indirect
+	github.com/google/go-querystring v1.0.0 // indirect
 	github.com/gorilla/websocket v1.4.2 // indirect
 	github.com/jmcvetta/randutil v0.0.0-20150817122601-2bb1b664bcff // indirect
 	github.com/pkg/errors v0.9.1 // indirect
-	golang.org/x/sys v0.0.0-20160601133225-076b54675315 // indirect
+	golang.org/x/sys v0.0.0-20190422165155-953cdadca894 // indirect
 )

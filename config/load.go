@@ -7,10 +7,10 @@ import (
 	"os"
 )
 
-var Config config
+var Config AppConfig
 
 func Load(filePath string) error {
-	Config = config{}
+	Config = AppConfig{}
 	if _, err := os.Stat(filePath); os.IsNotExist(err) {
 		return fmt.Errorf("Config file not found")
 	}
@@ -22,8 +22,16 @@ func Load(filePath string) error {
 
 	err = yaml.Unmarshal(configContent, &Config)
 	if err != nil {
-		return fmt.Errorf("Error parsing config file: %s", err)
+		return fmt.Errorf("Error parsing AppConfig file: %s", err)
 	}
 
-	return nil
+	if pdToken := os.Getenv("PAGERDUTY_TOKEN"); pdToken != "" {
+		Config.ApiKeys.Pagerduty.Key = pdToken
+	}
+
+	if slackToken := os.Getenv("SLACK_TOKEN"); slackToken != "" {
+		Config.ApiKeys.Slack = slackToken
+	}
+
+	return Config.Validate()
 }

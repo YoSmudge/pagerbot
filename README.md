@@ -57,7 +57,7 @@ The configuration should be fairly straightforward, under API keys provide your 
 configure the Slack groups you'd like to update. Schedules is a list of PagerDuty schedule IDs, update_message is the
 message you'd like to post, and the channels you'd like to post them in.
 
-Once done, you can run PagerBot with `./pagerbot --config /path/to/config.yml`
+Once done, you can run PagerBot with `./pagerbot --config /path/to/config.yaml`
 
 It's recommended to run PagerBot under Upstart or some other process manager.
 
