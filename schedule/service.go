@@ -2,10 +2,12 @@ package schedule
 
 import (
 	"context"
+	"time"
+
 	"github.com/PagerDuty/go-pagerduty"
 	log "github.com/Sirupsen/logrus"
+	"github.com/qoharu/pagerbot/config"
 	"github.com/qoharu/pagerbot/user"
-	"time"
 )
 
 type Service interface {
@@ -27,8 +29,14 @@ func NewService(userService user.Service, pdClient *pagerduty.Client) Service {
 }
 
 func (s service) GetActiveSchedule(id string) (Schedule, error) {
-	now := time.Now().UTC().Format("2006-01-02")
-	oneHourLater := time.Now().UTC().Add(time.Hour * 1).Format("2006-01-02")
+	tz, err := time.LoadLocation(config.Config.TZ)
+	if err != nil {
+		return Schedule{}, err
+	}
+
+	currentTime := time.Now().In(tz)
+	now := currentTime.Format("2006-01-02")
+	oneHourLater := currentTime.Add(time.Hour * 1).Format("2006-01-02")
 
 	pdSchedule, err := s.client.GetScheduleWithContext(
 		context.Background(),
